@@ -22,3 +22,7 @@ export {
     default as Cart
 }
 from "./Page/Cart";
+export {
+    default as PizzaBlock
+}
+from "./PizzaBlock/PizzaBlock";
