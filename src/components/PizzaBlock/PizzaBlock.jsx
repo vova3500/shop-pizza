@@ -23,7 +23,7 @@ const PizzaBlock = ({ imageUrl, name, sizes, price, types }) => {
         <ul>
           {aviablesTypes.map((type, index) => (
             <li
-              key={types}
+              key={type}
               className={classNames({
                 active: activeType === index,
                 disabled: !types.includes(index),
