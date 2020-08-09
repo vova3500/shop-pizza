@@ -25,4 +25,8 @@ from "./Page/Cart";
 export {
     default as PizzaBlock
 }
-from "./PizzaBlock/PizzaBlock";
+from "./PizzaBlock";
+export {
+    default as PizzaLoadingBlock
+}
+from "./PizzaBlock/PizzaLoadingBlock";
