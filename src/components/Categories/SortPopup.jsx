@@ -1,9 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
 
-const SortPopup = React.memo(({ items }) => {
+const SortPopup = React.memo(({ items, activSortBy, onSelectSortBy }) => {
   const [visablePopup, setVisablePopup] = useState(false);
-  const [activePopup, setActivePopup] = useState(0);
-  const activeLabel = items[activePopup].name;
+  const activeLabel = items.find((obj) => obj.type === activSortBy).name;
 
   const sortRef = useRef(null);
 
@@ -11,10 +10,16 @@ const SortPopup = React.memo(({ items }) => {
     setVisablePopup(!visablePopup);
   };
 
-  const hendleOutsideClick = (e) => {
-    if (!e.path.includes(sortRef.current)) {
+  const hendleOutsideClick = (event) => {
+    var path = event.path || (event.composedPath && event.composedPath());
+    if (!path.includes(sortRef.current)) {
       setVisablePopup(false);
     }
+  };
+
+  const onSelectItem = (type) => {
+    onSelectSortBy(type);
+    setVisablePopup(false);
   };
 
   useEffect(() => {
@@ -46,8 +51,8 @@ const SortPopup = React.memo(({ items }) => {
             {items.map((obj, index) => (
               <li
                 key={`${obj.type}_${index}`}
-                className={activePopup === index ? "active" : ""}
-                onClick={() => setActivePopup(index)}
+                className={activSortBy === obj.type ? "active" : ""}
+                onClick={() => onSelectItem(obj.type)}
               >
                 {obj.name}
               </li>
