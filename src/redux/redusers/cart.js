@@ -1,17 +1,28 @@
-const initialState = {};
+const addPizzaCard = "ADD_PIZZA_CARD";
+
+const initialState = {
+  items: {},
+  totalPrise: 0,
+  totalCount: 0,
+};
 
 const cart = (state = initialState, action) => {
   switch (action.type) {
-    case "SET_PIZZAS": {
-      return {
-        ...state,
-        items: action.payload,
+    case addPizzaCard: {
+      const newItems = {
+        ...state.items,
+        [action.payload.id]: !state.items[action.payload.id]
+          ? [action.payload]
+          : [...state.items[action.payload.id], action.payload],
       };
-    }
-    case "LOADING_PIZZA": {
+
+      let allPurchases = [].concat.apply([], Object.values(newItems));
+
       return {
         ...state,
-        isLoading: action.payload,
+        items: newItems,
+        totalCount: allPurchases.length,
+        totalPrise: allPurchases.reduce((sum, obj) => obj.price + sum, 0),
       };
     }
     default: {

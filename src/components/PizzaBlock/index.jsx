@@ -1,20 +1,39 @@
 import React, { useState } from "react";
 import classNames from "classnames";
 
-import PizzaLoadingBlock from "./PizzaLoadingBlock";
+import Button from "../Header/Button";
 
-const PizzaBlock = ({ imageUrl, name, sizes, price, types, isLoading }) => {
+const PizzaBlock = ({
+  id,
+  imageUrl,
+  name,
+  sizes,
+  price,
+  types,
+  onAddPizza,
+  inCardCount,
+}) => {
   const aviablesTypes = ["тонкое", "традиционное"];
   const aviablesSizes = [26, 30, 40];
 
   const [activeType, setActiveType] = useState(types[0] | null);
-  const [activeSize, setActiveSize] = useState(sizes[0] | null);
+  const [activeSize, setActiveSize] = useState(0 | null);
 
   const onSelectType = (index) => {
     setActiveType(index);
   };
   const onSelectSize = (index) => {
     setActiveSize(index);
+  };
+  const addPizza = () => {
+    onAddPizza({
+      id,
+      imageUrl,
+      name,
+      price,
+      size: aviablesSizes[activeSize],
+      type: aviablesTypes[activeType],
+    });
   };
 
   return (
@@ -51,7 +70,7 @@ const PizzaBlock = ({ imageUrl, name, sizes, price, types, isLoading }) => {
       </div>
       <div className="pizza-block__bottom">
         <div className="pizza-block__price">{`от ${price} ₽`}</div>
-        <div className="button button--outline button--add">
+        <Button onClick={addPizza} className="button--add" outline>
           <svg
             width="12"
             height="12"
@@ -65,8 +84,8 @@ const PizzaBlock = ({ imageUrl, name, sizes, price, types, isLoading }) => {
             />
           </svg>
           <span>Добавить</span>
-          <i>2</i>
-        </div>
+          {inCardCount && <i>{inCardCount}</i>}
+        </Button>
       </div>
     </div>
   );

@@ -1,3 +1,6 @@
+const setPizza = "SET_PIZZAS";
+const loadingPizza = "LOADING_PIZZA";
+
 const initialState = {
   items: [],
   isLoading: false,
@@ -5,13 +8,13 @@ const initialState = {
 
 const pizzas = (state = initialState, action) => {
   switch (action.type) {
-    case "SET_PIZZAS": {
+    case setPizza: {
       return {
         ...state,
         items: action.payload,
       };
     }
-    case "LOADING_PIZZA": {
+    case loadingPizza: {
       return {
         ...state,
         isLoading: action.payload,
