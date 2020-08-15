@@ -66,7 +66,9 @@ const Home = () => {
               <PizzaBlock
                 key={pizza.id}
                 {...pizza}
-                inCardCount={cardItems[pizza.id] && cardItems[pizza.id].length}
+                inCardCount={
+                  cardItems[pizza.id] && cardItems[pizza.id].items.length
+                }
                 onAddPizza={onAddPizza}
               />
             ))

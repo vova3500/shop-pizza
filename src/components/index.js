@@ -6,3 +6,4 @@ export { default as Home } from "./Page/Home";
 export { default as Cart } from "./Page/Card";
 export { default as PizzaBlock } from "./PizzaBlock";
 export { default as PizzaLoadingBlock } from "./PizzaBlock/PizzaLoadingBlock";
+export { default as CardItem } from "./Page/Card/CardItem";
