@@ -101,7 +101,7 @@ const Card = () => {
               <span>Очистить корзину</span>
             </div>
           </div>
-          {totalCount}
+
           <div className="content__items">
             {pizzas.map((obj, index) => (
               <CardItem
