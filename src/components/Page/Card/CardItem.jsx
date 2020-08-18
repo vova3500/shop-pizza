@@ -2,25 +2,26 @@ import React from "react";
 
 const CardItem = ({
   onDeletePizzaGroup,
-  id,
-  imageUrl,
-  size,
-  type,
-  name,
+  onPlusCardPizza,
+  onMinusCardPizza,
+  pizza,
   totalPrise,
   totalCount,
 }) => {
   return (
     <div className="cart__item">
       <div className="cart__item-img">
-        <img className="pizza-block__image" src={imageUrl} alt="Pizza" />
+        <img className="pizza-block__image" src={pizza.imageUrl} alt="Pizza" />
       </div>
       <div className="cart__item-info">
-        <h3>{name}</h3>
-        <p>{`${type}, ${size} см. `}</p>
+        <h3>{pizza.name}</h3>
+        <p>{`${pizza.type}, ${pizza.size} см. `}</p>
       </div>
       <div className="cart__item-count">
-        <div className="button button--outline button--circle cart__item-count-minus">
+        <div
+          onClick={() => onMinusCardPizza(pizza)}
+          className="button button--outline button--circle cart__item-count-minus"
+        >
           <svg
             width="10"
             height="10"
@@ -39,7 +40,10 @@ const CardItem = ({
           </svg>
         </div>
         <b>{totalCount}</b>
-        <div className="button button--outline button--circle cart__item-count-plus">
+        <div
+          onClick={() => onPlusCardPizza(pizza)}
+          className="button button--outline button--circle cart__item-count-plus"
+        >
           <svg
             width="10"
             height="10"
@@ -61,7 +65,10 @@ const CardItem = ({
       <div className="cart__item-price">
         <b>{totalPrise} ₽</b>
       </div>
-      <div onClick={() => onDeletePizzaGroup(id)} className="cart__item-remove">
+      <div
+        onClick={() => onDeletePizzaGroup(pizza.id)}
+        className="cart__item-remove"
+      >
         <div className="button button--outline button--circle">
           <svg
             width="10"

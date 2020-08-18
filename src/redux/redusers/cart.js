@@ -1,6 +1,8 @@
 const addPizzaCard = "ADD_PIZZA_CARD";
 const clearCard = "CLEAR_CARD";
 const deletePizzaGroup = "DELETE_PIZZA_GROUP";
+const minusCardPizza = "MINUS_CARD_PIZZA";
+const plusCardPizza = "PLUS_CARD_PIZZA";
 
 const initialState = {
   items: {},
@@ -62,6 +64,50 @@ const cart = (state = initialState, action) => {
         totalPrise: state.totalPrise - currentTotalPrise,
       };
     }
+
+    case minusCardPizza: {
+      const oldItems = state.items[action.payload.id].items;
+      const newObjItems =
+        oldItems.length > 1
+          ? state.items[action.payload.id].items.slice(1)
+          : oldItems;
+      const newItems = {
+        ...state.items,
+        [action.payload.id]: {
+          items: newObjItems,
+          totalPrise: getTotalPrise(newObjItems),
+        },
+      };
+      return {
+        ...state,
+        items: newItems,
+        totalPrise:
+          state.totalPrise - (oldItems.length > 1 ? action.payload.price : 0),
+        totalCount: state.totalCount - (oldItems.length > 1 ? 1 : 0),
+      };
+    }
+
+    case plusCardPizza: {
+      const newObjItems = [
+        ...state.items[action.payload.id].items,
+        action.payload,
+      ];
+      const newItems = {
+        ...state.items,
+        [action.payload.id]: {
+          items: newObjItems,
+          totalPrise: getTotalPrise(newObjItems),
+        },
+      };
+      console.log(newItems);
+      return {
+        ...state,
+        items: newItems,
+        totalPrise: state.totalPrise + action.payload.price,
+        totalCount: state.totalCount + 1,
+      };
+    }
+
     default: {
       return state;
     }

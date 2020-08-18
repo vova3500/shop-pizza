@@ -3,7 +3,12 @@ import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 
 import { CardItem } from "../../";
-import { clearCard, deletePizzaGroup } from "../../../redux/actions/cart";
+import {
+  clearCard,
+  deletePizzaGroup,
+  minusCardPizza,
+  plusCardPizza,
+} from "../../../redux/actions/cart";
 
 import emptyCart from "../../../assets/img/empty-cart.png";
 import { Link } from "react-router-dom";
@@ -22,6 +27,14 @@ const Card = () => {
 
   const onDeletePizzaGroup = (idGroup) => {
     dispatch(deletePizzaGroup(idGroup));
+  };
+
+  const onMinusCardPizza = (pizza) => {
+    dispatch(minusCardPizza(pizza));
+  };
+
+  const onPlusCardPizza = (pizza) => {
+    dispatch(plusCardPizza(pizza));
   };
 
   return (
@@ -106,14 +119,12 @@ const Card = () => {
             {pizzas.map((obj, index) => (
               <CardItem
                 onDeletePizzaGroup={onDeletePizzaGroup}
+                onMinusCardPizza={onMinusCardPizza}
+                onPlusCardPizza={onPlusCardPizza}
+                pizza={obj}
                 key={obj.id + index}
-                imageUrl={obj.imageUrl}
-                size={obj.size}
-                type={obj.type}
-                name={obj.name}
                 totalPrise={items[obj.id].totalPrise}
                 totalCount={items[obj.id].items.length}
-                id={obj.id}
               />
             ))}
           </div>
@@ -127,8 +138,8 @@ const Card = () => {
               </span>
             </div>
             <div className="cart__bottom-buttons">
-              <a
-                href="/"
+              <Link
+                to="/"
                 className="button button--outline button--add go-back-btn"
               >
                 <svg
@@ -146,8 +157,8 @@ const Card = () => {
                     strokeLinejoin="round"
                   />
                 </svg>
-                <Link to="/">Вернуться назад</Link>
-              </a>
+                Вернуться назад
+              </Link>
               <div className="button pay-btn">
                 <span>Оплатить сейчас</span>
               </div>
@@ -155,17 +166,15 @@ const Card = () => {
           </div>
         </div>
       ) : (
-        <div class="cart cart--empty">
-          <h2>
-            Корзина пустая <icon>😕</icon>
-          </h2>
+        <div className="cart cart--empty">
+          <h2>Корзина пустая</h2>
           <p>
             Вероятней всего, вы не заказывали ещё пиццу.
             <br />
             Для того, чтобы заказать пиццу, перейди на главную страницу.
           </p>
           <img src={emptyCart} alt="Empty cart" />
-          <Link to="/" class="button button--black">
+          <Link to="/" className="button button--black">
             <span>Вернуться назад</span>
           </Link>
         </div>
